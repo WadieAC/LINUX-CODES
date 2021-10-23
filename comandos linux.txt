@@ -1,0 +1,254 @@
+
+COMANDOS EN LA CONSOLA DE LINUX.
+————————————————————————————————————
+
+man 'command'  ; saca manual por pantalla del comando
+
+LISTADO DE CONTENIDOS DE UN DIRECTORIO.
+=======================================================================
+cd             ; te lleva al directorio principal
+cd ..          ; te lleva a una carpeta/directorio anterior
+pwd            ; imprime la ruta del directorio actual
+ls             ; list directory
+ls-R           ; Muestra repulsivamente los directorios encontrados
+ls -a 		; muestra todos los archivos, incluyendo los que están ocultos para el usuario
+ls -c 		; lista ordenada por día y hora de creación
+ls -t          ; lista ordenada por día y hora de modificación
+ls -r          ; muestra el directorio y lo ordena en orden inverso
+ls subdir      ; muestra el contenido del directorio subir
+ls -l          ; lista con toda la info, caract rw-rw-r etc
+ls -l file1    ; muestra info de permisos de archivo
+ls -l filename ; muestra info del directorio o fichero
+ls -color      ; muestra el directorio con colores por ejecutables
+ls *.gif       ; muestra todos los archivos .gif
+ls file?       ; muestra todos los archivos cuyo nombre empiecen por file y tengan 5 letras
+
+
+CREACIÓN DE FICHEROS Y SUBDIRECTORIOS.
+=========================================================================
+touch          ; actualiza archivos con time act. crea si no existe
+touch hola.txt ; crea el archivo ‘hola.txt’ en el directorio actual
+mkdir ‘subdir1’; crea directorio/subdir ‘subdir1’
+
+
+BORRADO DE SUBDIRECTORIOS.
+=========================================================================
+rmdir 'namedir'; borra el dir/subdir indicado
+
+
+COPIA DE ARCHIVOS TRASLADO Y CAMBIO DE NOMBRE.
+=========================================================================
+cp file1 file2 ; copia un fichero en otro, si no existe lo crea con las mismos atributos
+                 si existe el file2 lo machaca con el contenido del file1
+cp file1 file2 dir ; copia los files indicados en el dir
+mv file1 file1 ; move fichero1 al fichero2
+mv file /home..; move el fichero al directorio indicado
+mv dir1 dir2   ; move el dir1 al dir2
+
+
+BORRADO DE ARCHIVOS.
+=========================================================================
+rm file1 file2 ; elimina uno o mas archivos hasta n archivos
+rm -i file1    ; pregunta antes de ejecutar el borrado
+rm -R file/dir ; borra todos los archivos y directorios creados en file/dir
+
+ENLACE DE ARCHIVOS.
+=========================================================================
+ln file1 file2 ; make link between files
+
+
+CARACTERÍSTICAS DE UN ARCHIVO.
+=========================================================================
+file 'file1'   ; obtienes info del fichero en cuestión
+more/less      ; visualizas archivo pantalla a pant. 23 lin
+<barra espacio>; dentro del more/less es un next
+<crtl+d>       ; salir more/less 
+lpr file       ; imprime por defecto el archivo indicado
+> ó <          ; redirige archivo hacia donde se indique
+>>             ; append de un archivo a otro.
+
+COMANDOS DE PROCESOS.
+=========================================================================
+|              ; tubería para empalma campos/comandos(alt+1)
+	ejemplo ls | mail juan ; envía a juan una lista de los archivos del sistema
+time + command ; muestra tiempo CPU utilizado
+top            ; procesos que se están ejecutando u proceso de usuario, k elimina, h ayuda.
+date           ; muestra día y hora
+cal            ; muestra calendario ej. cal 1990
+who            ; indica usuario que tiene la maquina 
+whoami         ; sesión y terminal en la que se está trabajando
+uptime         ; tiempo que lleva encendido el pc.
+hostname       ; nombre maquina bc             ; abre calculadora - para salir quit
+lshw           ; muestra características de hardware
+history        ; historial de comandos
+fc -l          ; últimos comandos usados
+lspci          ; saca lista pci
+umask          ; muestra permisos crear archivos default
+uname -r       ; muestra versión del kernel
+lusb           ; info usb
+xkill          ; cierra programa bloqueado
+clear          ; borra consola
+groups         ; saca grupos de usuario
+head           ; indicando name y num muestras sus n lines
+
+
+CAMBIO DEL MODO DE ARCHIVOS -‘CHANGE MOD’. -chmod chown
+=========================================================================
+chmod          ; change file mode bits
+chmod [quien],[dar/quitar],[permiso],[file]
+	  quien: u =user, g =group, o =others, a =all - si no se indica nada se supone a-
+	  dar/quitar: + =dar , - =quitar
+	  permiso: r =read, w =write, x =execute
+	  file: el nombre del fichero
+	  
+ejemplo: chmod a+r ejemplo.txt
+
+chown 'newowner' file1 filen  ; change owner
+chgrp 'newgroup' file1 filen  ; change group de las filas
+
+ejemplo:
+
+chmod u-w,g-w,a-w $HOME/PRUEBA/dir2 ; Elimina todos los permisos de escritura (propietario, grupo, otros) del directorio dir2
+
+
+REDIRECCIONES DE SALIDAS.
+=========================================================================
+
+Los comandos tienen una entrada estándar (número 0) y 2 salidas estándar (1 salida norma, 
+2 salida con errores). Por defecto la entrada y salida es la terminal, podemos especificar
+los nombres de archivos que hagan entrada y de salida.
+
+Ejemplo:
+
+cp file1 file2
+
+Se pueden redirigir salidas;
+
+>   ; redirige salida estándar hacia el archivo indicado y en caso de no existir se crea
+<   ; redirige entrada estándar desde un determinado archivo.
+>>  ; redirige la salida estándar hacia otro archivo, pero añadiendo dicha salida al final
+date >>archivo  ; el archivo archivo contendrá información sobre todas las veces que se ha
+                  entrado en el sistema.
+ls | tee file ; muestra salida por terminal y envía salida al archivo file
+   ejemplo; ls | lee a- file ;  la salida se añade al final de file.
+
+gcc prueba.py 2>errores ; redirige la salida 2 hacia el archivo errores
+program <datos.py >resultados.r 2> & 1;   redirige la salida estándar errores al mismo archivo que la salida estándar
+
+
+VISUALIZACIÓN ARCHIVOS SIN FORMATO.
+=========================================================================
+cat filename             ; saca por pantalla el contenido de un archivo
+cat file1 fileN..        ; saca por pantalla el contenido secuencialmente y según orden
+cat file 2 >> file1      ; añade archivo 2 al final de 1 lo llama file1
+cat file1 file2 >file3   ; introduce file1 y 2 en 3 machaca lo que hay en 3
+cat file1 file2 >> file3 ; append de file1 y 2 en 3
+cat >file1               ; input por pantalla en file, para terminar <crtl>d
+
+
+EDITOR VI.
+=========================================================================
+vi              ; para entrar en el editor
+
+	 i    	 insertar antes de cursor
+	 a    	 añadir detrás de cursor
+	 x    	 borrar un caracter
+	 j    	 borrar el final de linea (une lineas)
+	 dd   	 borra linea completa
+	 u    	 deshacer
+	 :q   	 salir
+	 :q!  	 salir sin guardar
+	 :w   	 guardar
+	 :wq  	 guardar y salir
+	 :set nu muestra números de linea
+	 :set nonu oculta números de linea
+	 
+
+VISUALIZACIÓN ARCHIVOS CON FORMATO. PRINT
+=========================================================================
+pr file1           ; print file, 66 por pág.
+pr -F file         ; hace pausa hasta q se pulsa return para cont.
+pr -ln file        ; imprime n lineas por pág. 
+pr -t file         ; suprime 5 primeras lineas de cabecera.
+pr -wn file        ; ajusta al ancho de la pág.
+pr -t file         ; suprime las 5 primeras lineas
+pr -d file         ; lista archivo con espacio doble
+pr -h ‘texto’ file ; el ‘texto’ se convierte en cabecera
+pr +n file         ; imprime el archivo a partir de la pág. n
+lpr archivo.txt    ; imprime por defecto el archivo.txt
+
+Estas opciones se pueden combinar ej. pr -dt 'file'
+
+
+
+VISUALIZACIÓN DATOS POR PANTALLA.
+=========================================================================
+
+more file   ; número de 23 lineas por pantalla, espacio para siguiente pág.
+less file   ; página anterior
+<ctrl>d o q ;  para salir
+
+
+
+COMPRESIÓN Y DESCOMPRESIÓN DE ARCHIVOS.
+=========================================================================
+
+tar -cvf file_name.tar file1 file2 ; agrupa en uno solo .tar
+tar -xpvf file_name.tar file1  ; saca el archivo
+
+gzip file1      ; comprime archivo en gzip
+gzip -d file1.gz ; saca el archivo
+
+tar -zxf file1.tar.gz ; saca el tar del gzip 
+
+
+
+BÚSQUEDA y FILTRADO EN ARCHIVOS.
+=========================================================================
+
+grep ‘cadena’ file1 file2 file3 ; busca una palabra clave o frase en archivos.
+grep [-opcion] 'cadena' [referencia]
+
+opciones:   -c ; escribe el número de lineas que cumplen condición
+            -i ; no distingue mayusculas y minúsculas
+            -l ; escribe nombre de archivos con lineas buscadas
+            -s ; no se vuelcan los mensajes que indican que un archivo no se puede abrir
+            -v ; muestra lo que no satisface criterio.
+ejemplos:
+	 	grep '^d' file ; quita todo lo que no tenga d,ergo recupero todo lo que
+				  empieza por d
+	 	grep '^[^d]'   ; quita todo lo que no tenga d, y sacas lo contrario, ergo 					  sacas todo lo que no empieza por d
+	 	grep -v '^C' file1 > file2  ; quitas todo lo que empieza por C y lo pasas a  
+             					file2
+
+
+
+
+
+
+EJECUCIÓN DE PROGRAMAS.
+=========================================================================
+	 	
+Ejemplo:
+
+		      time gcc prueba.py ; ofrece información sobre tiempo compilación y           			montaje del programa prueba.py
+
+ 	 	      program <programa.r >resultados.r & 
+ 	 	      
+ 	 	   (ejecución en 2º plano, recupero control en terminal--devuelve nº_proceso)
+ 	 	      
+ 	 	      kill nº_proceso:  mato el programa
+ 	 	      
+ 	 	      nohup program ; salgo y no paro ejecuciones en
+ 	 	      	              2º plano lo manda a nohup.out
+ 	 	      
+ 	 	      nice program & ; ejecuciones en min. prioridad
+ 	 	      
+ 	 	      nice nohup program &
+ 	 	      
+ 	 	      nice -19 program & ; minima prioridad
+ 	 	      
+ 
+ 	 	      	           
+ 	 	      
+ 	 	      

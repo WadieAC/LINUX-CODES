@@ -1,0 +1,396 @@
+COMANDOS EN LA CONSOLA DE LINUX.
+
+
+EJECUCIÓN DE PROGRAMAS.
+=========================================================================
+	 	
+Ejemplo:
+
+		      time gcc prueba.py ; ofrece información sobre tiempo compilación y           			montaje del programa prueba.py
+
+ 	 	      program <programa.r >resultados.r & 
+ 	 	      
+ 	 	   (ejecución en 2º plano, recupero control en terminal--devuelve nº_proceso)
+ 	 	      
+ 	 	      kill nº_proceso:  mato el programa
+ 	 	      
+ 	 	      nohup program ; salgo y no paro ejecuciones en
+ 	 	      	              2º plano lo manda a nohup.out
+ 	 	      
+ 	 	      nice program & ; ejecuciones en min. prioridad
+ 	 	      
+ 	 	      nice nohup program &
+ 	 	      
+ 	 	      nice -19 program & ; minima prioridad
+ 	 	      
+ 
+ 	 	      	           
+ 	 	      
+ 	 	      
+#! ó bin ó bash ; indica que debe usarse el intérprete Bourne-Alain Shell
+
+
+CREACIÓN - ELIMINACIÓN DE VARIABLES EN CONSOLA.
+=========================================================================
+
+echo $variable ; visualiza por pantalla el valor de la variable
+
+——Variable por consola,Script
+
+Ejemplo;
+
+Listado=“ls -l”
+
+Ahora ejecuto la variable listado
+
+$Listado
+
+Si la quiero eliminar utilizo
+
+unset listado
+
+
+PARÁMETROS POR CONSOLA
+=========================================================================
+
+Con el script ya creado podemos pasarle los parámetros por consola;
+
+bash “nombre.txt” par1 par2 par3 …
+
+Forma del Script;
+
+echo el nombre del programa es $0
+echo el nombre de la primera variable es $1
+echo el nombre de la segunda variable es $2
+
+Ejemplo; 
+
+bash Prueba.txt hola adios
+
+salida;
+
+el nombre del programa es Prueba.txt
+el nombre de la primera variable es hola
+el nombre de la segunda variable es adios
+
+
+
+DEFINICIÓN DE VARIABLES EN SCRIPT
+=========================================================================
+
+
+
+Ejemplo script2;
+————————————
+
+echo el valor de var1 sin definir es $var1
+echo el valor de var1 introducida en script es ${var1=5}
+echo el valor de var1 definido ya en script es $var1
+
+Ejecución:
+————————————
+bash script2
+
+
+Salida:
+————————————
+echo el valor de var1 sin definir es 
+echo el valor de var1 introducida en script es 5
+echo el valor de var1 definido ya en script es 5
+
+
+
+
+ARRAYS EN SCRIPT
+=========================================================================
+
+
+nombre_array=(val1 val2 val3…valn)
+
+SLICING -modificación de parámetros de array
+
+nombre_array[i]=valor
+
+${nombre_array[i]} —> devuelve el valor en la posición i
+
+${nombre_array[*]} —> devuelve todos los elementos del array
+
+
+ESTRUCTURA IF
+=========================================================================
+
+if [expresión]
+then
+órdenes a ejecutar si se cumple la condición
+elif [expresión]
+then
+órdenes a ejecutar si se cumple la condición
+else
+órdenes a ejecutar en caso contrario
+fi
+
+
+
+Ejemplo;
+
+Script3
+
+if grep -q ‘echo’ script2
+then
+echo variable echo encontrada
+else
+echo variable echo no encontrada
+fi
+
+
+Ejecuto script3.
+————————————————
+
+bash script3 
+
+
+Resultado:
+————————————————
+variable echo encontrada
+
+
+
+OPERADORES PARA NÚMEROS.
+=========================================================================
+
+-eq Igual a
+-ne Distinto de
+-lt Menor que
+-le Menor o igual que
+-gt Mayor que
+-ge Mayor o igual que
+
+
+if [ $e -eq 1 ]
+then
+echo Vale 1
+else
+echo No vale 1
+fi
+
+
+OPERADORES PARA CADENAS.
+=========================================================================
+
+-z cadena          ; Verdad si la longitud de cadena es cero
+-n cadena o cadena ; Verdad si la longitud de cadena no es cero
+cadena1 == cadena2 ; Verdad si las cadenas son iguales. Se puede emplear = en vez de ==
+cadena1 != cadena2 ; Verdad si las cadenas no son iguales
+cadena1 < cadena2  ; Verdad si cadena1 se ordena lexicográficamente antes de cadena2 en la localización en curso
+cadena1 > cadena2  ; Verdad si cadena1 se ordena lexicográficamente después de cadena2 en la localización en curso
+
+#! /bin/bash
+
+S1=’cadena’
+
+S2=’Cadena’
+
+if [ $S1!=$S2 ];
+
+then
+
+echo "S1(’$S1’) no es igual a S2(’$S2’)"
+
+fi
+
+if [ $S1=$S1 ];
+
+then
+
+echo "S1(’$S1’) es igual a S1(’$S1’)"
+
+fi
+
+
+OPERADORES SOBRE FICHEROS.
+=========================================================================
+
+-e fichero ; El fichero existe
+-r fichero ; El fichero existe y tengo permiso de lectura
+-w fichero ; El fichero existe y tengo permiso de escritura
+-x fichero ; El fichero existe y tengo permiso de ejecución
+-f fichero ; El fichero existe y es regular
+-s fichero ; El fichero existe y es de tamaño mayor a cero
+-d fichero ; El fichero existe y es un directorio
+
+
+Ejemplo;
+
+
+f test -f "$1" # ¿ es un fichero ?
+
+then
+
+more $1
+
+elif test -d "$1" # ¿ es un directorio ?
+
+then
+
+(cd $1;ls -l|more)
+
+else # no es ni fichero ni directorio
+
+echo "$1 no es fichero ni directorio"
+
+fi
+
+
+OPERADORES LÓGICOS
+=========================================================================
+
+-o; OR
+-a; AND
+! ; NOT
+\(; Paréntesis izquierdo
+\); Paréntesis derecho
+
+
+ESTRUCTURA CASE
+=========================================================================
+
+case $var in
+
+v1) … #Acción a realizar si var toma el valor v1
+;;
+v2|v3) …#Acción a realizar si var toma el valor v2 o v3
+;;
+*) …# Caso por defecto
+;;
+
+esac
+
+ejemplo:
+
+case $var in
+1) echo La variable var es un uno
+;;
+2) echo La variable var es un dos
+;;
+*) echo La variable var no es ni un uno ni un dos
+;;
+esac
+
+
+BUCLES
+=========================================================================
+
+while [ expresión ] # Mientras la expresión sea cierta ...
+
+do
+
+...
+
+done
+
+-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-..—..
+
+until [ expresión ]
+
+# Mientras la expresión sea falsa ...
+
+do ...
+
+done
+
+-.-.-.-.-.-.-…-.—.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.
+
+for var in lista#Por cada valor en la estructura lista se ejecuta una iteración.
+
+do
+
+órdenes a ejecutar
+
+done
+
+EJEMPLO;
+
+for i in 10 30 70
+
+do
+
+echo Mi número favorito es $i
+
+done
+
+-.-.-.—.-.-.-.-.-..-.—.-.-.-.-.-..-.-.-.-.-.-.-.-.—.—.—.
+
+
+break- transfiere el control a la orden que sigue a done, haciendo que el bucle 
+termine antes de tiempo.
+
+continue- transfiere el control a done, haciendo que se evalúe 
+de nuevo la condición, prosiguiendo el bucle.
+
+En ambos casos, las órdenes del cuerpo del bucle siguientes a estas sentencias 
+no se ejecutan. Lo normal es que formen parte de una sentencia condicional, como if.
+
+
+ÓRDENES INTERNAS EN LA SHELL
+=========================================================================
+
+
+echo ; envía una cadena a una salida estándar
+   ejemplo; echo esto es una cadena
+
+-e para darle formato al echo
+———————————————————————————————
+
+	\b; retrocede posición sin borrar
+
+	\f; alimentación de una página
+
+	\n; salto de línea
+
+	\t; tabulador
+
+Ejemplo; 
+
+$ echo -e “Hola \t ¿Cómo estás?”
+
+read ; lee una cadena de la entrada estándar
+   ejemplo: echo -n “Introduzca un valor para var1:”
+            read var1
+	     echo “var1 = $var1”
+
+
+$ let a=$b+7. Si el último arg se evalúa a 0, let devuelve 1; si no, devuelve 0.
+
+exit - finaliza la ejecución de un guión.
+true y false — 0 devuelve true 1 false.
+
+
+
+FUNCIONES
+========================================================================
+
+
+#se define la función hola
+
+función hola {
+
+echo ¡hola¡
+
+}
+
+hola #se llama a la función hola
+
+
+————Definición de parámetros.
+
+!#/bin/bash
+
+function e{
+
+echo $1
+
+}
+
+Se podría invocar como:
+
+e Hola
